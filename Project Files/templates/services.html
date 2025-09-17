@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services - Citizen AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #1a56db 0%, #3b82f6 100%);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #e0f2fe;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(26, 86, 219, 0.9), rgba(59, 130, 246, 0.9)), url('https://images.unsplash.com/photo-1584697964358-3e14ca57658b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .page-header p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Services Section */
+        .services-section {
+            padding: 80px 0;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-icon {
+            background: linear-gradient(135deg, #1a56db 0%, #3b82f6 100%);
+            color: white;
+            font-size: 40px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .service-content {
+            padding: 25px;
+        }
+
+        .service-content h3 {
+            font-size: 22px;
+            color: #1e3a8a;
+            margin-bottom: 15px;
+        }
+
+        .service-content p {
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .service-features {
+            list-style-type: none;
+            margin-top: 20px;
+        }
+
+        .service-features li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+            color: #64748b;
+        }
+
+        .service-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            background-color: white;
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-header h2 {
+            font-size: 36px;
+            color: #1e3a8a;
+            margin-bottom: 15px;
+        }
+
+        .section-header p {
+            color: #64748b;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 0 20px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1a56db 0%, #3b82f6 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 600;
+            margin: 0 auto 20px;
+        }
+
+        .step h3 {
+            font-size: 20px;
+            color: #1e3a8a;
+            margin-bottom: 15px;
+        }
+
+        .step p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #1a56db 0%, #3b82f6 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: white;
+            color: #1a56db;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            margin-left: 15px;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #1a56db;
+        }
+
+        /* Footer Styles */
+        footer {
+            background: #1e3a8a;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                gap: 15px;
+            }
+            
+            .page-header h1 {
+                font-size: 36px;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .process-steps {
+                flex-direction: column;
+            }
+            
+            .step {
+                margin-bottom: 40px;
+            }
+            
+            .btn {
+                display: block;
+                margin-bottom: 15px;
+                width: 100%;
+            }
+            
+            .btn-secondary {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <i class="fas fa-robot"></i> Citizen AI
+                </a>
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="/services">Services</a></li>
+                        <li><a href="/login">Login</a></li>
+                        <li><a href="/register">Register</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Our Services</h1>
+            <p>Discover how Citizen AI transforms citizen-government interactions through cutting-edge AI technology</p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section">
+        <div class="container">
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>AI-Powered Conversational Assistant</h3>
+                        <p>Our intelligent assistant provides instant, accurate responses to your government service queries 24/7.</p>
+                        <ul class="service-features">
+                            <li>Instant responses to government service queries</li>
+                            <li>24/7 availability for citizen support</li>
+                            <li>Natural language processing for easy communication</li>
+                            <li>Multi-language support for diverse citizens</li>
+                            <li>Contextual understanding of complex inquiries</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Sentiment Analysis</h3>
+                        <p>Gain valuable insights into public opinion and improve services based on citizen feedback.</p>
+                        <ul class="service-features">
+                            <li>Real-time analysis of citizen feedback</li>
+                            <li>Identification of emerging issues and concerns</li>
+                            <li>Visualization of public sentiment trends</li>
+                            <li>Customized reports for government departments</li>
+                            <li>Actionable insights for service improvement</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Dynamic Dashboard</h3>
+                        <p>Access real-time analytics and visualizations of citizen interactions and service performance.</p>
+                        <ul class="service-features">
+                            <li>Real-time visualization of citizen interactions</li>
+                            <li>Performance metrics for government services</li>
+                            <li>Customizable reporting tools</li>
+                            <li>Trend analysis and predictive insights</li>
+                            <li>Role-based access for government officials</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Document Guidance</h3>
+                        <p>Get step-by-step assistance with government forms, applications, and documentation requirements.</p>
+                        <ul class="service-features">
+                            <li>Step-by-step form assistance</li>
+                            <li>Document requirement checklists</li>
+                            <li>Application status tracking</li>
+                            <li>Personalized document recommendations</li>
+                            <li>Integration with government portals</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Personalized Alerts</h3>
+                        <p>Receive timely notifications about policy changes, deadlines, and relevant government updates.</p>
+                        <ul class="service-features">
+                            <li>Customized alert preferences</li>
+                            <li>Deadline reminders for applications</li>
+                            <li>Policy change notifications</li>
+                            <li>Service availability updates</li>
+                            <li>Multi-channel delivery (SMS, Email, App)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <div class="service-content">
+                        <h3>Grievance Redressal</h3>
+                        <p>Report issues and track resolution progress through our streamlined complaint management system.</p>
+                        <ul class="service-features">
+                            <li>Easy issue reporting and tracking</li>
+                            <li>Automated ticket generation</li>
+                            <li>Department-wise routing of complaints</li>
+                            <li>Resolution status updates</li>
+                            <li>Citizen satisfaction feedback</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>How It Works</h2>
+                <p>Citizen AI simplifies your interaction with government services through a seamless process</p>
+            </div>
+
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Ask Your Question</h3>
+                    <p>Type your query about any government service in natural language, just like you'd ask a person.</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>AI Processing</h3>
+                    <p>Our IBM Granite AI analyzes your question, understands context, and retrieves the most relevant information.</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Get Accurate Response</h3>
+                    <p>Receive a precise answer with references to official policies, procedures, and next steps.</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Provide Feedback</h3>
+                    <p>Share your experience to help us improve services and contribute to better governance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Experience Smarter Government Services?</h2>
+            <p>Join thousands of citizens who are already benefiting from AI-powered government interactions</p>
+            <a href="/register" class="btn">Get Started Now</a>
+            <a href="/login" class="btn btn-secondary">Existing User Login</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Citizen AI. Empowering Indian Citizens with AI Technology.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add fade-in animation to service cards when they come into view
+        document.addEventListener('DOMContentLoaded', function() {
+            const serviceCards = document.querySelectorAll('.service-card');
+            
+            serviceCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                setTimeout(() => {
+                    card.classList.add('fade-in');
+                }, 200 * (index + 1));
+            });
+        });
+    </script>
+</body>
+</html>

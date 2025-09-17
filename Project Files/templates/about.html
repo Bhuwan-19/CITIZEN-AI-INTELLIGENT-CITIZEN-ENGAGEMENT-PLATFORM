@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Citizen AI</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a4b8c, #2b6cb0);
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #1a4b8c;
+            border-bottom: 2px solid #2b6cb0;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+        .intro {
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+        .feature {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+        .feature-title {
+            color: #2b6cb0;
+            margin-top: 0;
+        }
+        .tech-stack {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        .tech-item {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 150px;
+        }
+        .tech-item img {
+            height: 60px;
+            margin-bottom: 10px;
+        }
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .benefit-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #1a4b8c;
+            color: white;
+            border-radius: 8px;
+        }
+        @media (max-width: 768px) {
+            .tech-stack {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>About Citizen AI</h1>
+        <p>Intelligent Citizen Engagement Platform</p>
+    </div>
+
+    <div class="intro">
+        <p>Citizen AI is an AI-powered platform using IBM Watson and Granite models to enhance citizen engagement, provide real-time responses, and support data-driven governance. Our mission is to revolutionize how governments interact with the public through cutting-edge artificial intelligence technology.</p>
+    </div>
+
+    <h2>Project Description</h2>
+    <p>Citizen AI is an intelligent citizen engagement platform designed to revolutionize how governments interact with the public. Leveraging Flask, IBM Granite models, and IBM Watson, Citizen AI provides real-time, AI-driven responses to citizen inquiries regarding government services, policies, and civic issues.</p>
+    
+    <p>The platform integrates natural language processing (NLP) and sentiment analysis to assess public sentiment, track emerging issues, and generate actionable insights for government agencies. A dynamic analytics dashboard offers real-time visualizations of citizen feedback, helping policymakers enhance service delivery and transparency.</p>
+    
+    <p>By automating routine interactions and enabling data-driven governance, Citizen AI improves citizen satisfaction, government efficiency, and public trust in digital governance.</p>
+
+    <h2>Key Features</h2>
+    
+    <div class="feature">
+        <h3 class="feature-title">Real-Time Conversational AI Assistant</h3>
+        <p>The Real-Time Conversational AI Assistant in Citizen AI serves as the primary interface for citizen interaction. It allows users to engage with public services naturally by typing questions or requests. The system captures user input in real-time and immediately sends it to a powerful underlying AI model, such as IBM Granite.</p>
+        <p>This model processes the query and generates a relevant, human-like response on the fly. The assistant then displays this response back to the user almost instantly, facilitating quick access to information, support, and the ability to perform tasks like reporting issues, 24/7. It aims to provide a seamless and efficient conversational experience for civic engagement.</p>
+    </div>
+    
+    <div class="feature">
+        <h3 class="feature-title">Citizen Sentiment Analysis</h3>
+        <p>Citizen Sentiment Analysis in Citizen AI is a core feature designed to understand the public's feelings about government services and related topics. It works by analysing text input, whether from direct citizen feedback submitted through the platform or potentially from other digital interactions.</p>
+        <p>Using AI, the system classifies the sentiment of the text as Positive, Neutral, or Negative. This process helps the government quickly identify areas of public satisfaction or concern. By aggregating sentiment data, the platform provides valuable insights into overall citizen mood and highlights specific issues that may need attention, ultimately aiming to improve service delivery and citizen satisfaction. The results are presented on the dashboard for easy monitoring.</p>
+    </div>
+    
+    <div class="feature">
+        <h3 class="feature-title">Dynamic Dashboard</h3>
+        <p>The Dynamic Dashboard in Citizen AI serves as a central hub for government officials to gain real-time insights into citizen feedback and interactions. It visualizes key data points, including the overall citizen sentiment (positive, neutral, negative) derived from submitted feedback.</p>
+        <p>The dashboard also tracks interaction trends over time, showing peak periods of activity. Furthermore, it can display aggregated government service ratings or issues reported by citizens. By presenting this information dynamically through charts and clear metrics, the dashboard empowers government departments to quickly understand public perception, identify areas needing improvement, and make data-driven decisions to enhance public services and citizen satisfaction. It transforms raw interaction data into actionable intelligence for a more responsive government.</p>
+    </div>
+
+    <h2>Technology Stack</h2>
+    <div class="tech-stack">
+        <div class="tech-item">
+            <strong>IBM Watson</strong>
+            <p>AI & Machine Learning</p>
+        </div>
+        <div class="tech-item">
+            <strong>IBM Granite</strong>
+            <p>Advanced AI Models</p>
+        </div>
+        <div class="tech-item">
+            <strong>Flask</strong>
+            <p>Web Framework</p>
+        </div>
+        <div class="tech-item">
+            <strong>NLP</strong>
+            <p>Natural Language Processing</p>
+        </div>
+    </div>
+
+    <h2>Benefits</h2>
+    <div class="benefits">
+        <div class="benefit-card">
+            <h3>For Citizens</h3>
+            <ul>
+                <li>24/7 access to government services information</li>
+                <li>Quick responses to queries</li>
+                <li>Easy feedback submission</li>
+                <li>Personalized assistance based on Indian laws</li>
+            </ul>
+        </div>
+        <div class="benefit-card">
+            <h3>For Government</h3>
+            <ul>
+                <li>Real-time public sentiment analysis</li>
+                <li>Data-driven decision making</li>
+                <li>Improved service delivery</li>
+                <li>Enhanced transparency and trust</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>© 2023 Citizen AI. All rights reserved.</p>
+        <p>Empowering citizen-government engagement through artificial intelligence</p>
+    </div>
+</body>
+</html>

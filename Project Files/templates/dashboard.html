@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citizen AI Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(135deg, #1a56db 0%, #3b82f6 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .logo h1 {
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: #93c5fd;
+        }
+
+        .nav-links {
+            flex: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            text-decoration: none;
+            color: #e0f2fe;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-left: 4px solid #93c5fd;
+        }
+
+        .nav-item i {
+            margin-right: 15px;
+            font-size: 18px;
+        }
+
+        .logout {
+            margin-top: auto;
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 12px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .logout-btn i {
+            margin-right: 10px;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .welcome h2 {
+            font-size: 24px;
+            color: #1e3a8a;
+            margin-bottom: 5px;
+        }
+
+        .welcome p {
+            color: #64748b;
+        }
+
+        .datetime-card {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        #current-date {
+            font-size: 16px;
+            color: #64748b;
+            margin-bottom: 5px;
+        }
+
+        #current-time {
+            font-size: 28px;
+            font-weight: 600;
+            color: #1e40af;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .bg-blue {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        }
+
+        .bg-green {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .bg-orange {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        /* Feedback Section */
+        .feedback-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+
+        .view-all {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .feedback-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .feedback-item {
+            display: flex;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f8fafc;
+            transition: all 0.3s ease;
+        }
+
+        .feedback-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .feedback-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #3b82f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .feedback-content {
+            flex: 1;
+        }
+
+        .feedback-text {
+            color: #334155;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .feedback-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .feedback-user {
+            font-weight: 500;
+            color: #1e3a8a;
+        }
+
+        .feedback-date {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .sentiment-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .sentiment-positive {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .sentiment-negative {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .sentiment-neutral {
+            background: #fffbeb;
+            color: #92400e;
+        }
+
+        .sentiment-moderate {
+            background: #e0f2fe;
+            color: #075985;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                padding: 15px;
+            }
+            
+            .nav-links {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                margin-bottom: 15px;
+            }
+            
+            .nav-item {
+                padding: 10px 15px;
+                border-radius: 5px;
+            }
+            
+            .logout {
+                margin-top: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .datetime-card {
+                align-self: stretch;
+                text-align: left;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <h1><i class="fas fa-robot"></i> Citizen <span>AI</span></h1>
+            </div>
+            
+            <div class="nav-links">
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+                <a href="/chat" class="nav-item">
+                    <i class="fas fa-comment"></i> Chat
+                </a>
+                <a href="/feedback" class="nav-item">
+                    <i class="fas fa-star"></i> Feedback
+                </a>
+              
+            </div>
+            
+            <div class="logout">
+                <button class="logout-btn" onclick="location.href='/logout'">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="welcome">
+                    <h2>Welcome back, {{ user.full_name }}!</h2>
+                    <p>Here's what's happening with Citizen AI today</p>
+                </div>
+                
+                <div class="datetime-card">
+                    <div id="current-date">Monday, September 7, 2025</div>
+                    <div id="current-time">11:45:32 AM</div>
+                </div>
+            </div>
+            
+            <!-- Stats Grid -->
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Total Feedback</div>
+                        <div class="card-icon bg-blue">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value">{{ sentiment_stats.values() | sum | default(0) }}</div>
+                    <div class="stat-label">From your account</div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Positive Sentiment</div>
+                        <div class="card-icon bg-green">
+                            <i class="fas fa-smile"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value">
+                        {% if sentiment_stats and sentiment_stats.values() | sum > 0 %}
+                            {{ ((sentiment_stats.get('Positive', 0) / (sentiment_stats.values() | sum)) * 100) | round | int }}%
+                        {% else %}
+                            0%
+                        {% endif %}
+                    </div>
+                    <div class="stat-label">Of your feedback</div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Recent Chats</div>
+                        <div class="card-icon bg-orange">
+                            <i class="fas fa-comment-dots"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value">{{ chat_history | length }}</div>
+                    <div class="stat-label">In your history</div>
+                </div>
+            </div>
+            
+            <!-- Feedback Section -->
+            <div class="feedback-section">
+                <div class="section-header">
+                    <h3 class="section-title">Your Recent Feedback</h3>
+                    <a href="/feedback" class="view-all">View All</a>
+                </div>
+                
+                <div class="feedback-list">
+                    {% if recent_feedback %}
+                        {% for feedback in recent_feedback %}
+                        <div class="feedback-item">
+                            <div class="feedback-avatar">{{ feedback.initials }}</div>
+                            <div class="feedback-content">
+                                <p class="feedback-text">{{ feedback.text }}</p>
+                                <div class="feedback-meta">
+                                    <span class="feedback-user">{{ user.full_name }}</span>
+                                    <span class="feedback-date">{{ feedback.date }}</span>
+                                </div>
+                            </div>
+                            <span class="sentiment-badge sentiment-{{ feedback.sentiment | lower }}">{{ feedback.sentiment }}</span>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="no-feedback">
+                            <p>You haven't submitted any feedback yet. <a href="/feedback">Share your thoughts</a> to help us improve!</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update date and time in real-time
+        function updateDateTime() {
+            const now = new Date();
+            
+            // Format date
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = now.toLocaleDateString('en-US', options);
+            
+            // Format time
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const formattedTime = `${hours % 12 || 12}:${minutes}:${seconds} ${ampm}`;
+            
+            // Update DOM
+            document.getElementById('current-date').textContent = formattedDate;
+            document.getElementById('current-time').textContent = formattedTime;
+        }
+        
+        // Update time immediately and then every second
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+    </script>
+</body>
+</html>

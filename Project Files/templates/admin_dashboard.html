@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Government Dashboard - Citizen AI</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Add Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-blue-800 text-white shadow-lg">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <i class="fas fa-landmark text-2xl mr-2"></i>
+                    <span class="text-xl font-semibold">Government Dashboard</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="text-sm">Welcome, {{ user.full_name }}</span>
+                    <a href="{{ url_for('logout') }}" class="bg-blue-700 hover:bg-blue-600 px-4 py-2 rounded-lg text-sm">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8">
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center">
+                    <div class="rounded-full bg-blue-100 p-3 mr-4">
+                        <i class="fas fa-users text-blue-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-500 text-sm">Total Users</p>
+                        <p class="text-2xl font-bold">{{ all_users|length }}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center">
+                    <div class="rounded-full bg-green-100 p-3 mr-4">
+                        <i class="fas fa-comment-dots text-green-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-500 text-sm">Total Feedback</p>
+                        <p class="text-2xl font-bold">{{ all_feedback|length }}</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center">
+                    <div class="rounded-full bg-purple-100 p-3 mr-4">
+                        <i class="fas fa-chart-pie text-purple-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <p class="text-gray-500 text-sm">Sentiment Analysis</p>
+                        <p class="text-sm">
+                            <span class="text-green-600">Positive: {{ sentiment_stats.get('Positive', 0) }}</span> | 
+                            <span class="text-red-600">Negative: {{ sentiment_stats.get('Negative', 0) }}</span> | 
+                            <span class="text-gray-600">Neutral: {{ sentiment_stats.get('Neutral', 0) }}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- User List -->
+            <div class="bg-white rounded-lg shadow">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-lg font-semibold text-gray-800">Registered Users</h2>
+                </div>
+                <div class="divide-y divide-gray-200 max-h-96 overflow-y-auto">
+                    {% for user in all_users %}
+                    <div class="px-6 py-4">
+                        <div class="flex items-center">
+                            <div class="flex-shrink-0 h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold">
+                                {{ user.full_name[0]|upper }}{{ user.full_name.split()[-1][0]|upper if user.full_name.split()|length > 1 else '' }}
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-sm font-medium text-gray-900">{{ user.full_name }}</h3>
+                                <p class="text-sm text-gray-500">{{ user.email }}</p>
+                                <p class="text-xs text-gray-400">
+                                    Joined: {{ user.created_at.split()[0] }} | 
+                                    {% if user.last_login %}
+                                    Last login: {{ user.last_login.split()[0] }}
+                                    {% else %}
+                                    Never logged in
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="px-6 py-4 text-center text-gray-500">
+                        No users registered yet.
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Feedback List -->
+            <div class="bg-white rounded-lg shadow">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-lg font-semibold text-gray-800">User Feedback</h2>
+                </div>
+                <div class="divide-y divide-gray-200 max-h-96 overflow-y-auto">
+                    {% for feedback in all_feedback %}
+                    <div class="px-6 py-4">
+                        <div class="flex justify-between items-start">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 h-10 w-10 rounded-full 
+                                    {% if feedback.sentiment == 'Positive' %}bg-green-500
+                                    {% elif feedback.sentiment == 'Negative' %}bg-red-500
+                                    {% else %}bg-gray-500{% endif %} 
+                                    flex items-center justify-center text-white font-semibold">
+                                    {{ feedback.user_name[0]|upper }}{{ feedback.user_name.split()[-1][0]|upper if feedback.user_name.split()|length > 1 else '' }}
+                                </div>
+                                <div class="ml-4">
+                                    <h3 class="text-sm font-medium text-gray-900">{{ feedback.user_name }}</h3>
+                                    <p class="text-sm text-gray-800">{{ feedback.feedback_text }}</p>
+                                    <p class="text-xs text-gray-400">
+                                        {{ feedback.timestamp.split()[0] }} at {{ feedback.timestamp.split()[1][:5] }}
+                                    </p>
+                                </div>
+                            </div>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
+                                {% if feedback.sentiment == 'Positive' %}bg-green-100 text-green-800
+                                {% elif feedback.sentiment == 'Negative' %}bg-red-100 text-red-800
+                                {% else %}bg-gray-100 text-gray-800{% endif %}">
+                                {{ feedback.sentiment }}
+                            </span>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="px-6 py-4 text-center text-gray-500">
+                        No feedback submitted yet.
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Sentiment Analysis Section with Pie Chart -->
+        <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Sentiment Chart (Progress Bars) -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-lg font-semibold text-gray-800 mb-4">Sentiment Distribution</h2>
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="bg-green-100 p-4 rounded-lg">
+                        <div class="flex justify-between items-center">
+                            <span class="text-green-800 font-medium">Positive</span>
+                            <span class="text-green-600 font-bold">{{ sentiment_stats.get('Positive', 0) }}</span>
+                        </div>
+                        <div class="w-full bg-green-200 rounded-full h-2 mt-2">
+                            <div class="bg-green-500 h-2 rounded-full" 
+                                 style="width: {{ (sentiment_stats.get('Positive', 0) / (all_feedback|length or 1)) * 100 }}%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-red-100 p-4 rounded-lg">
+                        <div class="flex justify-between items-center">
+                            <span class="text-red-800 font-medium">Negative</span>
+                            <span class="text-red-600 font-bold">{{ sentiment_stats.get('Negative', 0) }}</span>
+                        </div>
+                        <div class="w-full bg-red-200 rounded-full h-2 mt-2">
+                            <div class="bg-red-500 h-2 rounded-full" 
+                                 style="width: {{ (sentiment_stats.get('Negative', 0) / (all_feedback|length or 1)) * 100 }}%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-100 p-4 rounded-lg">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-800 font-medium">Neutral</span>
+                            <span class="text-gray-600 font-bold">{{ sentiment_stats.get('Neutral', 0) }}</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                            <div class="bg-gray-500 h-2 rounded-full" 
+                                 style="width: {{ (sentiment_stats.get('Neutral', 0) / (all_feedback|length or 1)) * 100 }}%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Pie Chart -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-lg font-semibold text-gray-800 mb-4">Sentiment Analysis</h2>
+                <div class="relative h-80">
+                    <canvas id="sentimentPieChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize the pie chart when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('sentimentPieChart').getContext('2d');
+            
+            // Get sentiment data from the template variables
+            const positiveCount = {{ sentiment_stats.get('Positive', 0) }};
+            const negativeCount = {{ sentiment_stats.get('Negative', 0) }};
+            const neutralCount = {{ sentiment_stats.get('Neutral', 0) }};
+            
+            const sentimentPieChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Positive', 'Negative', 'Neutral'],
+                    datasets: [{
+                        data: [positiveCount, negativeCount, neutralCount],
+                        backgroundColor: [
+                            'rgba(16, 185, 129, 0.8)',  // Green for positive
+                            'rgba(239, 68, 68, 0.8)',   // Red for negative
+                            'rgba(156, 163, 175, 0.8)'  // Gray for neutral
+                        ],
+                        borderColor: [
+                            'rgba(16, 185, 129, 1)',
+                            'rgba(239, 68, 68, 1)',
+                            'rgba(156, 163, 175, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: {
+                                    size: 14
+                                },
+                                padding: 20
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.raw || 0;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = Math.round((value / total) * 100);
+                                    return `${label}: ${value} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
